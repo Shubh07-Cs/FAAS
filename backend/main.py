@@ -12,8 +12,12 @@ app = FastAPI(title="Face Auth Attendance System")
 app.include_router(users.router)
 app.include_router(attendance.router)
 
+import os
+
 origins = [
-    "http://localhost:5173",  # React default port
+    "http://localhost:5173",
+    "http://localhost:5174",
+    os.getenv("FRONTEND_URL", "http://localhost:5173"),
 ]
 
 app.add_middleware(

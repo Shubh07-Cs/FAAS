@@ -24,7 +24,7 @@ export const MarkAttendance = () => {
         formData.append("file", file);
 
         try {
-            const res = await axios.post('http://localhost:8000/attendance/mark', formData, {
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/attendance/mark`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -44,7 +44,7 @@ export const MarkAttendance = () => {
             <h2 className="text-3xl font-bold mb-8 text-indigo-700">Mark Attendance</h2>
 
             <div className="mb-6">
-                <WebcamCapture onCapture={handleCapture} buttonText={loading ? "Processing..." : "Scan Face"} />
+                <WebcamCapture onCapture={handleCapture} buttonText={loading ? "Processing..." : "Scan Face"} disabled={loading} />
             </div>
 
             {message && (

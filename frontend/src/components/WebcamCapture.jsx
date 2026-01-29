@@ -7,16 +7,17 @@ const videoConstraints = {
     facingMode: "user"
 };
 
-export const WebcamCapture = ({ onCapture, buttonText = "Capture" }) => {
+export const WebcamCapture = ({ onCapture, buttonText = "Capture", disabled = false, buttonClassName = "" }) => {
     const webcamRef = useRef(null);
 
     const capture = useCallback(() => {
+        if (disabled) return;
         const imageSrc = webcamRef.current.getScreenshot();
         onCapture(imageSrc);
-    }, [webcamRef, onCapture]);
+    }, [webcamRef, onCapture, disabled]);
 
     return (
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-4 w-full">
             <div className="border-4 border-indigo-500 rounded-lg overflow-hidden shadow-lg">
                 <Webcam
                     audio={false}
@@ -29,7 +30,11 @@ export const WebcamCapture = ({ onCapture, buttonText = "Capture" }) => {
             </div>
             <button
                 onClick={capture}
-                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow transition transform hover:scale-105"
+                disabled={disabled}
+                className={buttonClassName || `px-6 py-3 font-bold rounded-lg shadow transition transform ${disabled
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-indigo-600 hover:bg-indigo-700 text-white hover:scale-105"
+                    }`}
             >
                 {buttonText}
             </button>

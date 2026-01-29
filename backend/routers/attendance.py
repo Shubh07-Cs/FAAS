@@ -67,5 +67,19 @@ def mark_attendance(
 
 @router.get("/", response_model=list[schemas.AttendanceResponse])
 def read_attendance(skip: int = 0, limit: int = 100, db: Session = Depends(database.get_db)):
-    logs = db.query(models.Attendance).offset(skip).limit(limit).all()
+    results = db.query(models.Attendance, models.User).join(models.User, models.Attendance.user_id == models.User.id).offset(skip).limit(limit).all()
+    
+    logs = []
+    for attendance, user in results:
+        # Create a clean dictionary to ensure Pydantic receives exactly what we want
+        attendance_dict = {
+            "id": attendance.id,
+            "user_id": attendance.user_id,
+            "status": attendance.status,
+            "timestamp": attendance.timestamp,
+            "user_name": user.name,
+            "user_email": user.email
+        }
+        logs.append(attendance_dict)
+        
     return logs

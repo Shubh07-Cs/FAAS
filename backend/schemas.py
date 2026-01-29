@@ -27,6 +27,9 @@ class AttendanceCreate(AttendanceBase):
 class AttendanceResponse(AttendanceBase):
     id: int
     timestamp: datetime
+    user_name: Optional[str] = None
+    user_email: Optional[str] = None
+
 
     class Config:
         from_attributes = True

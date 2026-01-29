@@ -24,6 +24,14 @@ def create_user(
     if face_encoding is None:
         raise HTTPException(status_code=400, detail="No face detected in the image")
         
+    # Check if face already exists
+    # verification is O(N) which is fine for small scale
+    all_users = db.query(models.User).all()
+    for user in all_users:
+        if user.face_encoding and utils.is_face_match(user.face_encoding, face_encoding):
+             raise HTTPException(status_code=400, detail=f"Face already registered with user {user.name}")
+
+        
     new_user = models.User(
         name=name,
         email=email,

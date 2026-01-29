@@ -49,3 +49,16 @@ def compare_faces(known_encoding_bytes, file_bytes, tolerance=0.6):
     results = face_recognition.compare_faces([known_encoding], input_encodings[0], tolerance=tolerance)
     
     return results[0]
+
+def is_face_match(known_encoding_bytes, new_encoding_bytes, tolerance=0.6):
+    """
+    Compares two pickled encodings directly.
+    """
+    if not known_encoding_bytes or not new_encoding_bytes:
+        return False
+        
+    known_encoding = pickle.loads(known_encoding_bytes)
+    new_encoding = pickle.loads(new_encoding_bytes)
+    
+    results = face_recognition.compare_faces([known_encoding], new_encoding, tolerance=tolerance)
+    return results[0]

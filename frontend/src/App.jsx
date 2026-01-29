@@ -4,6 +4,7 @@ import { Navbar } from './components/Navbar';
 import { Register } from './pages/Register';
 import { MarkAttendance } from './pages/MarkAttendance';
 import { Dashboard } from './pages/Dashboard';
+import { Contact } from './pages/Contact';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Register />} />
           <Route path="/attendance" element={<MarkAttendance />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

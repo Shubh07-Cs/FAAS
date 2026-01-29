@@ -10,7 +10,7 @@ export const Dashboard = () => {
 
     const fetchLogs = async () => {
         try {
-            const res = await axios.get('http://localhost:8000/attendance/');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/attendance/`);
             setLogs(res.data);
         } catch (error) {
             console.error("Failed to fetch logs", error);
@@ -28,6 +28,8 @@ export const Dashboard = () => {
                             <th className="py-3 px-4 text-left">User ID</th>
                             <th className="py-3 px-4 text-left">Timestamp</th>
                             <th className="py-3 px-4 text-left">Status</th>
+                            <th className="py-3 px-4 text-left">Name</th>
+                            <th className="py-3 px-4 text-left">Email</th>
                         </tr>
                     </thead>
                     <tbody className="text-gray-700">
@@ -41,6 +43,8 @@ export const Dashboard = () => {
                                         {log.status}
                                     </span>
                                 </td>
+                                <td className="py-3 px-4">{log.user_name}</td>
+                                <td className="py-3 px-4">{log.user_email}</td>
                             </tr>
                         ))}
                     </tbody>
