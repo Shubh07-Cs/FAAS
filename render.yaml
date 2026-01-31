@@ -16,6 +16,9 @@ services:
     runtime: static
     buildCommand: npm install && npm run build
     publishDir: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://face-auth-backend.onrender.com # Placeholder: Update with your actual backend URL after deploying it
     rootDir: frontend
     routes:
       - type: rewrite
